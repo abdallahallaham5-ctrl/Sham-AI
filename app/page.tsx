@@ -169,9 +169,10 @@ export default function Page() {
             <Languages size={14} />
             <label htmlFor="voice-language">Voice language</label>
             <select id="voice-language" value={voiceLang} onChange={(e) => setVoiceLang(e.target.value)}>
-              {VOICE_LANGUAGES && Object.entries(VOICE_LANGUAGES).map(([code, label]) => (
-                <option key={code} value={code}>{String(label)}</option>
-              ))}
+              {VOICE_LANGUAGES && (Array.isArray(VOICE_LANGUAGES) ? VOICE_LANGUAGES : Object.entries(VOICE_LANGUAGES)).map((item) => {
+                const [code, label] = Array.isArray(item) ? item : [item[0], item[1]];
+                return <option key={code} value={code}>{String(label || code)}</option>;
+              })}
             </select>
           </div>
           
