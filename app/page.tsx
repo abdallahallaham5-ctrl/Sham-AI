@@ -3,11 +3,19 @@
 import { useEffect, useState } from 'react'
 import { AccountControls } from '@/components/account-controls'
 import { DamascusStar } from '@/components/damascus-star'
-import VoiceInput, { VOICE_LANGUAGES } from '@/components/voice-input'
+import VoiceInput from '@/components/voice-input'
 import { AudioLines, Check, ChevronDown, CircleHelp, Code2, FileCode2, ImageIcon, Languages, Layers3, LayoutTemplate, Menu, MessageSquareText, Moon, Paperclip, Plus, Presentation, Send, Settings2, Sparkles, Sun, WandSparkles, X, Zap } from 'lucide-react'
 
 type Locale = 'en' | 'ar'
 type Tool = { id: string; icon: typeof MessageSquareText; en: { label: string; description: string; examples: string[] }; ar: { label: string; description: string; examples: string[] }; accent: string }
+
+const VOICE_LANGUAGES_LIST = [
+  { code: 'ar-SA', label: 'العربية (السعودية)' },
+  { code: 'en-US', label: 'English (US)' },
+  { code: 'fr-FR', label: 'Français' },
+  { code: 'es-ES', label: 'Español' },
+  { code: 'de-DE', label: 'Deutsch' },
+]
 
 const tools: Tool[] = [
   { id: 'chat', icon: MessageSquareText, accent: 'gold', en: { label: 'Chat', description: 'Ask, brainstorm, write, and think faster', examples: ['Help me plan my week', 'Brainstorm a product name', 'Explain a difficult concept'] }, ar: { label: 'المحادثة', description: 'اسأل وفكّر واكتب بشكل أسرع', examples: ['ساعدني في تخطيط أسبوعي', 'اقترح اسماً لمنتج', 'اشرح مفهوماً صعباً'] } },
@@ -169,10 +177,9 @@ export default function Page() {
             <Languages size={14} />
             <label htmlFor="voice-language">Voice language</label>
             <select id="voice-language" value={voiceLang} onChange={(e) => setVoiceLang(e.target.value)}>
-              {VOICE_LANGUAGES && (Array.isArray(VOICE_LANGUAGES) ? VOICE_LANGUAGES : Object.entries(VOICE_LANGUAGES)).map((item) => {
-                const [code, label] = Array.isArray(item) ? item : [item[0], item[1]];
-                return <option key={code} value={code}>{String(label || code)}</option>;
-              })}
+              {VOICE_LANGUAGES_LIST.map((item) => (
+                <option key={item.code} value={item.code}>{item.label}</option>
+              ))}
             </select>
           </div>
           
